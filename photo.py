@@ -21,16 +21,20 @@ def start_identify(image):
     global eye_x, eye_y, eye_width, eye_height
 
 
-    # 加载人脸检测联级文件
+    # 创建人脸检测级联分类器对象实例
     face_detect = cv2.CascadeClassifier('D:\python_object\eyes_coordinates\haarcascade_frontalface_default.xml')
 
-    # 加载眼部检测联级文件
+    # 创建眼部检测级联分类器对象实例
     eye_detect = cv2.CascadeClassifier('D:\python_object\eyes_coordinates\haarcascade_eye.xml')
 
     # BRG转灰度图
     image_gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
-    # 检测人脸
+    # 调用识别人脸接口
+    # 参数说明，scaleFactor：图像缩放比例，可理解为相机的X倍镜，
+    # minNeighbors：对特征检测点周边多少有效点同时检测，这样可避免因选取的特征检测点太小而导致遗漏
+    # minSize：特征检测点的最小尺寸
+    #返回的人脸对象的个数
     faces = face_detect.detectMultiScale(image_gray, scaleFactor=1.15, minNeighbors=5, minSize=(5, 5))
 
     if len(faces) > 0:
